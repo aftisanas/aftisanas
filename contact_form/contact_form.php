@@ -4,15 +4,17 @@
 $from = 'Contact form contact@anas-aftis.com';
 $sendTo = 'contact@anas-aftis.com';
 $subject = 'New message from contact form';
-$fields = array('name' => 'Name', 'email' => 'Email', 'message' => 'Message'); // array variable name => Text to appear in the email
+$fields = array('name' => $_POST['name'], 'email' => $_POST['email'], 'message' => $_POST['message']); // array variable name => Text to appear in the email
 $okMessage = 'Contact form successfully submitted. Thank you, I will get back to you soon!';
 $errorMessage = 'There was an error while submitting the form. Please try again later';
 
 // let's do the sending
 
 if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])):
+    
     //your site secret key
-    $secret = '6LdqmCAUAAAAANONcPUkgVpTSGGqm60cabVMVaON';
+    $secret = '6Lc56wUnAAAAAL0gnAzyuPTcsPgrgAfBANS6FyZx';
+    
     //get verify response data
 
     $c = curl_init('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);

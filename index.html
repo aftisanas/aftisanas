@@ -115,13 +115,13 @@
                       <p class="home-page-description">UI/UX Designer</p>
                     </div>
                     <div>
-                      <p class="home-page-description">Web Developer</p>
+                      <p class="home-page-description">Full Stack Developer</p>
                     </div>
                   </div>
 
                   <div class="block end" style="text-align: center">
                     <ul class="info-list">
-                      <li><span class="title">Age</span><span class="value">19</span></li>
+                      <li><span class="title">Age</span><span class="value">20</span></li>
                       <li><span class="title">Address</span><span class="value">Hay Ennahda 1, Temara</span></li>
                       <li><span class="title">e-mail</span><span class="value"><a href="mailto:email@example.com">contact@anas-aftis.com</a></span></li>
                       <li><span class="title">Phone</span><span class="value">+212 684801921</span></li>
@@ -220,9 +220,26 @@
                   </div>
                 </div>
 
+                <!-- experience -->
                 <div class="col-sm-6 col-md-4 subpage-block">
                   <div class="block-title">
                     <h3>Experience</h3>
+                  </div>
+                  <div class="timeline">
+                    <!-- Single event -->
+                    <div class="timeline-event te-primary">
+                      <h5 class="event-date">Mar 2023 - April 2023</h5>
+                      <h4 class="event-name">Full Stack Developer</h4>
+                      <span class="event-description">4D Logiciel Maroc</span>
+                      <p>During my month and a half internship at 4D Software Maroc, I developed an employee management system using Qodly and 4D Server.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- projects -->
+                <div class="col-sm-6 col-md-4 subpage-block">
+                  <div class="block-title">
+                    <h3>Projects</h3>
                   </div>
                   <div class="timeline">
                     <!-- Single event -->
@@ -249,7 +266,8 @@
                   </div>
                 </div>
 
-                <div class="col-sm-6 col-md-4 subpage-block">
+                <!-- design skills -->
+                <!-- <div class="col-sm-6 col-md-4 subpage-block">
                   <div class="block-title">
                     <h3>Design Skills</h3>
                   </div>
@@ -295,7 +313,7 @@
                     </div>
 
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="row">
                 <div class="col-sm-12 col-md-12">
@@ -489,9 +507,13 @@
                           <div class="help-block with-errors"></div>
                       </div>
 
-                      <div class="g-recaptcha" data-sitekey="6LdqmCAUAAAAAMMNEZvn6g4W5e0or2sZmAVpxVqI" data-callback="correctCaptcha"></div>
+                      <!-- <div class="g-recaptcha" data-sitekey="6Lc56wUnAAAAAH-vk3wzHrtxpg0eSLPYP65tDL5j" data-callback="correctCaptcha"></div> -->
 
-                      <input type="submit" class="button btn-send" value="Send message">
+                      <button class="g-recaptcha" 
+                        data-sitekey="6Lc56wUnAAAAAH-vk3wzHrtxpg0eSLPYP65tDL5j"
+                        data-callback='onSubmit' 
+                        data-action='submit'>Submit</button>
+                      <!-- <input type="submit" class="button btn-send" value="Send message"> -->
                     </div>
                   </form>
                 </div>
@@ -516,6 +538,14 @@
     <script src="js/jquery.magnific-popup.min.js"></script>
     <script src="js/jquery.hoverdir.js"></script>
     <script src="js/main.js"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+      function onSubmit(token) {
+        document.getElementById("demo-form").submit();
+      }
+    </script>
+  <!-- </script> -->
 
   </body>
 </html>
