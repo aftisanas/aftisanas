@@ -37,7 +37,7 @@ if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'
             $mail->Host       = 'smtppro.zoho.com';
             $mail->SMTPAuth   = true;
             $mail->Username   = 'contact@anas-aftis.com';
-            $mail->Password   = 'secret';
+            $mail->Password   = 'a@bC3#Htx7$';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port       = 465;
 
@@ -88,4 +88,3 @@ else:
 
     echo $encoded;
 endif;
-
