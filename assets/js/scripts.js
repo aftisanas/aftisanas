@@ -6836,31 +6836,114 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   // /Portfolio subpage filters
 
   // Contact form validator
+  // $(function () {
+  //     $('#contact-form').validator();
+
+  //     $('#contact-form').on('submit', function (e) {
+  //         e.preventDefault();
+  //         grecaptcha.ready(function() {
+  //             grecaptcha.execute('6Lc56wUnAAAAAH-vk3wzHrtxpg0eSLPYP65tDL5j', {action: 'submit'}).then(function(token) {
+  //                 // Add your logic to submit to your backend server here.
+  //                 var url = "contact/contact.php";
+  //                 var formData = $(this).serialize() + '&g-recaptcha-response=' + token;
+
+  //                 $.ajax({
+  //                     type: "POST",
+  //                     url: url,
+  //                     data: formData,
+  //                     success: function (data) {
+  //                         var messageAlert = 'alert-' + data.type;
+  //                         var messageText = data.message;
+
+  //                         var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+
+  //                         if (messageAlert && messageText) {
+  //                             $('#contact-form').find('.messages').html(alertBox);
+
+  //                             if (messageAlert == "alert-success") {
+  //                                 $('#contact-form')[0].reset();
+  //                             }
+  //                         }
+  //                     }
+  //                 });
+  //             });
+  //         });
+  //     });
+  // });
   $(function () {
     $('#contact-form').validator();
     $('#contact-form').on('submit', function (e) {
-      if (!e.isDefaultPrevented()) {
-        var url = "contact/contact.php";
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: $(this).serialize(),
-          success: function success(data) {
-            var messageAlert = 'alert-' + data.type;
-            var messageText = data.message;
-            var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-            if (messageAlert && messageText) {
-              $('#contact-form').find('.messages').html(alertBox);
-              if (messageAlert == "alert-success") {
-                $('#contact-form')[0].reset();
+      e.preventDefault();
+      var name = document.getElementById('form_name').value;
+      var email = document.getElementById('form_email').value;
+      var message = document.getElementById('form_message').value;
+      grecaptcha.ready(function () {
+        grecaptcha.execute('6Lc56wUnAAAAAH-vk3wzHrtxpg0eSLPYP65tDL5j', {
+          action: 'submit'
+        }).then(function (token) {
+          var url = "contact/contact.php";
+          var formData = new FormData(this); // Create a FormData object from the form
+
+          // Append g-recaptcha-response to the form data
+          formData.append('name', name);
+          formData.append('email', email);
+          formData.append('message', message);
+          formData.append('g-recaptcha-response', token);
+          $.ajax({
+            type: "post",
+            url: url,
+            data: formData,
+            processData: false,
+            // Prevent jQuery from processing the data
+            contentType: false,
+            // Prevent jQuery from setting contentType
+            success: function success(data) {
+              var messageAlert = 'alert-' + data.type;
+              var messageText = data.message;
+              var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+              if (messageAlert && messageText) {
+                $('#contact-form').find('.messages').html(alertBox);
+                if (messageAlert == "alert-success") {
+                  $('#contact-form')[0].reset();
+                }
               }
             }
-          }
+          });
         });
-        return false;
-      }
+      });
     });
   });
+
+  // $(function () {
+
+  //     $('#contact-form').validator();
+
+  //     $('#contact-form').on('submit', function (e) {
+  //         if (!e.isDefaultPrevented()) {
+  //             var url = "contact/contact.php";
+
+  //             $.ajax({
+  //                 type: "POST",
+  //                 url: url,
+  //                 data: $(this).serialize(),
+  //                 success: function (data)
+  //                 {
+  //                     var messageAlert = 'alert-' + data.type;
+  //                     var messageText = data.message;
+
+  //                     var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+  //                     if (messageAlert && messageText) {
+  //                         $('#contact-form').find('.messages').html(alertBox);
+  //                         if (messageAlert == "alert-success") {
+  //                             $('#contact-form')[0].reset();
+  //                         }
+  //                     }
+  //                 }
+  //             });
+  //             return false;
+  //         }
+  //     });
+  // });
   // /Contact form validator
 
   // Text Rotator
@@ -58693,7 +58776,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	var installedModules = {};
 
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_162255__(moduleId) {
+/******/ 	function __nested_webpack_require_166745__(moduleId) {
 
 /******/ 		// Check if module is in cache
 /* istanbul ignore if */
@@ -58708,7 +58791,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		};
 
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_162255__);
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_166745__);
 
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
@@ -58719,21 +58802,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__nested_webpack_require_162255__.m = modules;
+/******/ 	__nested_webpack_require_166745__.m = modules;
 
 /******/ 	// expose the module cache
-/******/ 	__nested_webpack_require_162255__.c = installedModules;
+/******/ 	__nested_webpack_require_166745__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__nested_webpack_require_162255__.p = "";
+/******/ 	__nested_webpack_require_166745__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __nested_webpack_require_162255__(0);
+/******/ 	return __nested_webpack_require_166745__(0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __nested_webpack_require_163480__) {
+/***/ function(module, exports, __nested_webpack_require_168010__) {
 
 	"use strict";
 	/*
@@ -58760,10 +58843,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	*/
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var comment_handler_1 = __nested_webpack_require_163480__(1);
-	var jsx_parser_1 = __nested_webpack_require_163480__(3);
-	var parser_1 = __nested_webpack_require_163480__(8);
-	var tokenizer_1 = __nested_webpack_require_163480__(15);
+	var comment_handler_1 = __nested_webpack_require_168010__(1);
+	var jsx_parser_1 = __nested_webpack_require_168010__(3);
+	var parser_1 = __nested_webpack_require_168010__(8);
+	var tokenizer_1 = __nested_webpack_require_168010__(15);
 	function parse(code, options, delegate) {
 	    var commentHandler = null;
 	    var proxyDelegate = function (node, metadata) {
@@ -58848,7 +58931,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return tokens;
 	}
 	exports.tokenize = tokenize;
-	var syntax_1 = __nested_webpack_require_163480__(2);
+	var syntax_1 = __nested_webpack_require_168010__(2);
 	exports.Syntax = syntax_1.Syntax;
 	// Sync with *.json manifests.
 	exports.version = '4.0.1';
@@ -58856,11 +58939,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __nested_webpack_require_168128__) {
+/***/ function(module, exports, __nested_webpack_require_172781__) {
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var syntax_1 = __nested_webpack_require_168128__(2);
+	var syntax_1 = __nested_webpack_require_172781__(2);
 	var CommentHandler = (function () {
 	    function CommentHandler() {
 	        this.attach = false;
@@ -59087,7 +59170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __nested_webpack_require_176691__) {
+/***/ function(module, exports, __nested_webpack_require_181575__) {
 
 	"use strict";
 /* istanbul ignore next */
@@ -59102,13 +59185,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	})();
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var character_1 = __nested_webpack_require_176691__(4);
-	var JSXNode = __nested_webpack_require_176691__(5);
-	var jsx_syntax_1 = __nested_webpack_require_176691__(6);
-	var Node = __nested_webpack_require_176691__(7);
-	var parser_1 = __nested_webpack_require_176691__(8);
-	var token_1 = __nested_webpack_require_176691__(13);
-	var xhtml_entities_1 = __nested_webpack_require_176691__(14);
+	var character_1 = __nested_webpack_require_181575__(4);
+	var JSXNode = __nested_webpack_require_181575__(5);
+	var jsx_syntax_1 = __nested_webpack_require_181575__(6);
+	var Node = __nested_webpack_require_181575__(7);
+	var parser_1 = __nested_webpack_require_181575__(8);
+	var token_1 = __nested_webpack_require_181575__(13);
+	var xhtml_entities_1 = __nested_webpack_require_181575__(14);
 	token_1.TokenName[100 /* Identifier */] = 'JSXIdentifier';
 	token_1.TokenName[101 /* Text */] = 'JSXText';
 	// Fully qualified element name, e.g. <svg:path> returns "svg:path"
@@ -59691,11 +59774,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 5 */
-/***/ function(module, exports, __nested_webpack_require_216026__) {
+/***/ function(module, exports, __nested_webpack_require_221514__) {
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var jsx_syntax_1 = __nested_webpack_require_216026__(6);
+	var jsx_syntax_1 = __nested_webpack_require_221514__(6);
 	/* tslint:disable:max-classes-per-file */
 	var JSXClosingElement = (function () {
 	    function JSXClosingElement(name) {
@@ -59817,11 +59900,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 7 */
-/***/ function(module, exports, __nested_webpack_require_220088__) {
+/***/ function(module, exports, __nested_webpack_require_225702__) {
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var syntax_1 = __nested_webpack_require_220088__(2);
+	var syntax_1 = __nested_webpack_require_225702__(2);
 	/* tslint:disable:max-classes-per-file */
 	var ArrayExpression = (function () {
 	    function ArrayExpression(elements) {
@@ -60497,17 +60580,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 8 */
-/***/ function(module, exports, __nested_webpack_require_242163__) {
+/***/ function(module, exports, __nested_webpack_require_248457__) {
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var assert_1 = __nested_webpack_require_242163__(9);
-	var error_handler_1 = __nested_webpack_require_242163__(10);
-	var messages_1 = __nested_webpack_require_242163__(11);
-	var Node = __nested_webpack_require_242163__(7);
-	var scanner_1 = __nested_webpack_require_242163__(12);
-	var syntax_1 = __nested_webpack_require_242163__(2);
-	var token_1 = __nested_webpack_require_242163__(13);
+	var assert_1 = __nested_webpack_require_248457__(9);
+	var error_handler_1 = __nested_webpack_require_248457__(10);
+	var messages_1 = __nested_webpack_require_248457__(11);
+	var Node = __nested_webpack_require_248457__(7);
+	var scanner_1 = __nested_webpack_require_248457__(12);
+	var syntax_1 = __nested_webpack_require_248457__(2);
+	var token_1 = __nested_webpack_require_248457__(13);
 	var ArrowParameterPlaceHolder = 'ArrowParameterPlaceHolder';
 	var Parser = (function () {
 	    function Parser(code, options, delegate) {
@@ -63797,13 +63880,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 12 */
-/***/ function(module, exports, __nested_webpack_require_388267__) {
+/***/ function(module, exports, __nested_webpack_require_397861__) {
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var assert_1 = __nested_webpack_require_388267__(9);
-	var character_1 = __nested_webpack_require_388267__(4);
-	var messages_1 = __nested_webpack_require_388267__(11);
+	var assert_1 = __nested_webpack_require_397861__(9);
+	var character_1 = __nested_webpack_require_397861__(4);
+	var messages_1 = __nested_webpack_require_397861__(11);
 	function hexValue(ch) {
 	    return '0123456789abcdef'.indexOf(ch.toLowerCase());
 	}
@@ -65230,13 +65313,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 15 */
-/***/ function(module, exports, __nested_webpack_require_438794__) {
+/***/ function(module, exports, __nested_webpack_require_449821__) {
 
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
-	var error_handler_1 = __nested_webpack_require_438794__(10);
-	var scanner_1 = __nested_webpack_require_438794__(12);
-	var token_1 = __nested_webpack_require_438794__(13);
+	var error_handler_1 = __nested_webpack_require_449821__(10);
+	var scanner_1 = __nested_webpack_require_449821__(12);
+	var token_1 = __nested_webpack_require_449821__(13);
 	var Reader = (function () {
 	    function Reader() {
 	        this.values = [];
@@ -65416,7 +65499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	var installedModules = {};
 
 /******/ 	// The require function
-/******/ 	function __nested_webpack_require_446317__(moduleId) {
+/******/ 	function __nested_webpack_require_457530__(moduleId) {
 
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
@@ -65430,7 +65513,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		};
 
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_446317__);
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_457530__);
 
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
@@ -65441,35 +65524,35 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__nested_webpack_require_446317__.m = modules;
+/******/ 	__nested_webpack_require_457530__.m = modules;
 
 /******/ 	// expose the module cache
-/******/ 	__nested_webpack_require_446317__.c = installedModules;
+/******/ 	__nested_webpack_require_457530__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__nested_webpack_require_446317__.p = "";
+/******/ 	__nested_webpack_require_457530__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __nested_webpack_require_446317__(0);
+/******/ 	return __nested_webpack_require_457530__(0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __nested_webpack_require_447517__) {
+/***/ function(module, exports, __nested_webpack_require_458769__) {
 
 	/*
 	 * Copyright 2009-2011 Mozilla Foundation and contributors
 	 * Licensed under the New BSD license. See LICENSE.txt or:
 	 * http://opensource.org/licenses/BSD-3-Clause
 	 */
-	exports.SourceMapGenerator = __nested_webpack_require_447517__(1).SourceMapGenerator;
-	exports.SourceMapConsumer = __nested_webpack_require_447517__(7).SourceMapConsumer;
-	exports.SourceNode = __nested_webpack_require_447517__(10).SourceNode;
+	exports.SourceMapGenerator = __nested_webpack_require_458769__(1).SourceMapGenerator;
+	exports.SourceMapConsumer = __nested_webpack_require_458769__(7).SourceMapConsumer;
+	exports.SourceNode = __nested_webpack_require_458769__(10).SourceNode;
 
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __nested_webpack_require_447971__) {
+/***/ function(module, exports, __nested_webpack_require_459237__) {
 
 	/* -*- Mode: js; js-indent-level: 2; -*- */
 	/*
@@ -65478,10 +65561,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * http://opensource.org/licenses/BSD-3-Clause
 	 */
 
-	var base64VLQ = __nested_webpack_require_447971__(2);
-	var util = __nested_webpack_require_447971__(4);
-	var ArraySet = __nested_webpack_require_447971__(5).ArraySet;
-	var MappingList = __nested_webpack_require_447971__(6).MappingList;
+	var base64VLQ = __nested_webpack_require_459237__(2);
+	var util = __nested_webpack_require_459237__(4);
+	var ArraySet = __nested_webpack_require_459237__(5).ArraySet;
+	var MappingList = __nested_webpack_require_459237__(6).MappingList;
 
 	/**
 	 * An instance of the SourceMapGenerator represents a source map which is
@@ -65879,7 +65962,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
-/***/ function(module, exports, __nested_webpack_require_461800__) {
+/***/ function(module, exports, __nested_webpack_require_473476__) {
 
 	/* -*- Mode: js; js-indent-level: 2; -*- */
 	/*
@@ -65918,7 +66001,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 */
 
-	var base64 = __nested_webpack_require_461800__(3);
+	var base64 = __nested_webpack_require_473476__(3);
 
 	// A single base 64 digit can contain 6 bits of data. For the base 64 variable
 	// length quantities we use in the source map spec, the first bit is the sign,
@@ -66521,7 +66604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 5 */
-/***/ function(module, exports, __nested_webpack_require_479264__) {
+/***/ function(module, exports, __nested_webpack_require_491582__) {
 
 	/* -*- Mode: js; js-indent-level: 2; -*- */
 	/*
@@ -66530,7 +66613,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * http://opensource.org/licenses/BSD-3-Clause
 	 */
 
-	var util = __nested_webpack_require_479264__(4);
+	var util = __nested_webpack_require_491582__(4);
 	var has = Object.prototype.hasOwnProperty;
 
 	/**
@@ -66631,7 +66714,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 6 */
-/***/ function(module, exports, __nested_webpack_require_482198__) {
+/***/ function(module, exports, __nested_webpack_require_494626__) {
 
 	/* -*- Mode: js; js-indent-level: 2; -*- */
 	/*
@@ -66640,7 +66723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * http://opensource.org/licenses/BSD-3-Clause
 	 */
 
-	var util = __nested_webpack_require_482198__(4);
+	var util = __nested_webpack_require_494626__(4);
 
 	/**
 	 * Determine whether mappingB is after mappingA with respect to generated
@@ -66716,7 +66799,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 7 */
-/***/ function(module, exports, __nested_webpack_require_484689__) {
+/***/ function(module, exports, __nested_webpack_require_497202__) {
 
 	/* -*- Mode: js; js-indent-level: 2; -*- */
 	/*
@@ -66725,11 +66808,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * http://opensource.org/licenses/BSD-3-Clause
 	 */
 
-	var util = __nested_webpack_require_484689__(4);
-	var binarySearch = __nested_webpack_require_484689__(8);
-	var ArraySet = __nested_webpack_require_484689__(5).ArraySet;
-	var base64VLQ = __nested_webpack_require_484689__(2);
-	var quickSort = __nested_webpack_require_484689__(9).quickSort;
+	var util = __nested_webpack_require_497202__(4);
+	var binarySearch = __nested_webpack_require_497202__(8);
+	var ArraySet = __nested_webpack_require_497202__(5).ArraySet;
+	var base64VLQ = __nested_webpack_require_497202__(2);
+	var quickSort = __nested_webpack_require_497202__(9).quickSort;
 
 	function SourceMapConsumer(aSourceMap) {
 	  var sourceMap = aSourceMap;
@@ -68041,7 +68124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 10 */
-/***/ function(module, exports, __nested_webpack_require_532295__) {
+/***/ function(module, exports, __nested_webpack_require_546133__) {
 
 	/* -*- Mode: js; js-indent-level: 2; -*- */
 	/*
@@ -68050,8 +68133,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * http://opensource.org/licenses/BSD-3-Clause
 	 */
 
-	var SourceMapGenerator = __nested_webpack_require_532295__(1).SourceMapGenerator;
-	var util = __nested_webpack_require_532295__(4);
+	var SourceMapGenerator = __nested_webpack_require_546133__(1).SourceMapGenerator;
+	var util = __nested_webpack_require_546133__(4);
 
 	// Matches a Windows-style `\r\n` newline or a `\n` newline used by all other
 	// operating systems these days (capturing the result).

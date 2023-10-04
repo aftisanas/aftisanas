@@ -14,24 +14,47 @@ $fields = array('name' => $_POST['name'], 'email' => $_POST['email'], 'message' 
 $okMessage = 'Contact form successfully submitted. Thank you, I will get back to you soon!';
 $errorMessage = 'There was an error while submitting the form. Please try again later';
 
-$body = <<<HTML
+$body = 
+<<<HTML
     <h1>Name: {$fields['name']}</h1>
-    <h1>Email: {$fields['email']}</h1>
     <hr/>
-    <p>{$fields['message']}</p>
+    <h2>Email: {$fields['email']}</h2>
+    <hr/>
+    <p><strong>Message:</strong> {$fields['message']}</p>
 HTML;
 
 if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])):
     //your site recaptcha's secret key
     $secret = '6Lc56wUnAAAAAL0gnAzyuPTcsPgrgAfBANS6FyZx';
 
-    //get verify response data
-    $c = curl_init('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
-    curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-    $verifyResponse = curl_exec($c);
+    $api_url = 'https://www.google.com/recaptcha/api/siteverify'; 
+    $resq_data = array( 
+        'secret' => $secret, 
+        'response' => $_POST['g-recaptcha-response'], 
+        'remoteip' => $_SERVER['REMOTE_ADDR'] 
+    ); 
 
-    $responseData = json_decode($verifyResponse);
-    if($responseData->success):
+    $curlConfig = array( 
+        CURLOPT_URL => $api_url, 
+        CURLOPT_POST => true, 
+        CURLOPT_RETURNTRANSFER => true, 
+        CURLOPT_POSTFIELDS => $resq_data, 
+        CURLOPT_SSL_VERIFYPEER => false 
+    ); 
+
+    $ch = curl_init(); 
+    curl_setopt_array($ch, $curlConfig); 
+    $verifyResponse = curl_exec($ch); 
+    if (curl_errno($ch)) { 
+        $api_error = curl_error($ch); 
+    } 
+    curl_close($ch);
+    
+    // Decode JSON data of API verifyResponse in array 
+    $responseData = json_decode($verifyResponse); 
+
+    // If the reCAPTCHA API response is valid 
+    if(!empty($responseData) && $responseData->success){
         try
         {
             Mailer::config([ 
@@ -78,8 +101,7 @@ if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'
         else {
             echo $responseArray['message'];
         }
-
-    else:
+    } else {
         $errorMessage = 'Robot verification failed, please try again.';
         $responseArray = array('type' => 'danger', 'message' => $errorMessage);
         $encoded = json_encode($responseArray);
@@ -87,7 +109,7 @@ if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'
             header('Content-Type: application/json');
 
             echo $encoded;
-    endif;
+    }
 else:
     $errorMessage = 'Please click on the reCAPTCHA box.';
     $responseArray = array('type' => 'danger', 'message' => $errorMessage);
