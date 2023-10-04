@@ -6836,40 +6836,6 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   // /Portfolio subpage filters
 
   // Contact form validator
-  // $(function () {
-  //     $('#contact-form').validator();
-
-  //     $('#contact-form').on('submit', function (e) {
-  //         e.preventDefault();
-  //         grecaptcha.ready(function() {
-  //             grecaptcha.execute('6Lc56wUnAAAAAH-vk3wzHrtxpg0eSLPYP65tDL5j', {action: 'submit'}).then(function(token) {
-  //                 // Add your logic to submit to your backend server here.
-  //                 var url = "contact/contact.php";
-  //                 var formData = $(this).serialize() + '&g-recaptcha-response=' + token;
-
-  //                 $.ajax({
-  //                     type: "POST",
-  //                     url: url,
-  //                     data: formData,
-  //                     success: function (data) {
-  //                         var messageAlert = 'alert-' + data.type;
-  //                         var messageText = data.message;
-
-  //                         var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-
-  //                         if (messageAlert && messageText) {
-  //                             $('#contact-form').find('.messages').html(alertBox);
-
-  //                             if (messageAlert == "alert-success") {
-  //                                 $('#contact-form')[0].reset();
-  //                             }
-  //                         }
-  //                     }
-  //                 });
-  //             });
-  //         });
-  //     });
-  // });
   $(function () {
     $('#contact-form').validator();
     $('#contact-form').on('submit', function (e) {
@@ -6882,9 +6848,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
           action: 'submit'
         }).then(function (token) {
           var url = "contact/contact.php";
-          var formData = new FormData(this); // Create a FormData object from the form
+          var formData = new FormData(this);
 
-          // Append g-recaptcha-response to the form data
+          // Append g-recaptcha-response directly to the FormData object
           formData.append('name', name);
           formData.append('email', email);
           formData.append('message', message);
@@ -6894,19 +6860,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             url: url,
             data: formData,
             processData: false,
-            // Prevent jQuery from processing the data
             contentType: false,
-            // Prevent jQuery from setting contentType
             success: function success(data) {
-              var messageAlert = 'alert-' + data.type;
-              var messageText = data.message;
-              var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-              if (messageAlert && messageText) {
-                $('#contact-form').find('.messages').html(alertBox);
-                if (messageAlert == "alert-success") {
-                  $('#contact-form')[0].reset();
-                }
-              }
+              // Your success handling code
             }
           });
         });

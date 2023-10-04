@@ -111,7 +111,7 @@ if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'
             echo $encoded;
     }
 else:
-    $errorMessage = 'Please click on the reCAPTCHA box.';
+    $errorMessage = 'the reCAPTCHA token was not generated.';
     $responseArray = array('type' => 'danger', 'message' => $errorMessage);
     $encoded = json_encode($responseArray);
 
