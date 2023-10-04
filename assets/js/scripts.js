@@ -6862,7 +6862,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
             processData: false,
             contentType: false,
             success: function success(data) {
-              // Your success handling code
+              var messageAlert = 'alert-' + data.type;
+              var messageText = data.message;
+              var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+              if (messageAlert && messageText) {
+                $('#contact-form').find('.messages').html(alertBox);
+                if (messageAlert == "alert-success") {
+                  $('#contact-form')[0].reset();
+                }
+              }
             }
           });
         });

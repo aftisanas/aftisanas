@@ -35,7 +35,9 @@ mix.styles([
 ], 'css/styles.css');
 
 // compiling images
-mix.copy('src/images/**/*', 'assets/images');
+mix.copy('images', 'assets/images');
+mix.copy('images/portfolio', 'assets/images/portfolio');
+mix.copy('images/services', 'assets/images/services');
 
 mix.webpackConfig({ resolve: { fallback: 
     {
